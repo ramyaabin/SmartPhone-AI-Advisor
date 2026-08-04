@@ -1,0 +1,36 @@
+{
+  "name": "mobile-ai-store-backend",
+  "version": "1.0.0",
+  "description": "Express + LangChain RAG backend for the Mobile AI Store",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "ingest:chroma": "node scripts/ingestChroma.js",
+    "ingest:faiss": "node scripts/ingestFaiss.js"
+  },
+  "dependencies": {
+    "@langchain/openai": "^0.3.0",
+    "@langchain/community": "^0.3.0",
+    "@langchain/core": "^0.3.0",
+    "@xenova/transformers": "^2.17.2",
+    "chromadb": "^1.9.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0",
+    "faiss-node": "^0.5.1",
+    "helmet": "^7.1.0",
+    "langchain": "^0.3.2",
+    "morgan": "^1.10.0",
+    "openai": "^4.61.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

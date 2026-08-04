@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+*/node_modules/
+
+# Build output
+dist/
+build/
+
+# Env files
+.env
+.env.local
+*/.env
+
+# Vector store data (regenerate via ingestion scripts)
+embeddings/chroma/*
+embeddings/faiss/*
+!embeddings/chroma/.gitkeep
+!embeddings/faiss/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
