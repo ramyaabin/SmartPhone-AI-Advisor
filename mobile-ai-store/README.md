@@ -230,21 +230,22 @@ The FAISS + HuggingFace Instructor path requires **no API key at all** — every
 
 ## ☁️ Deployment
 
-### Backend → Render
-1. Push this repo to GitHub.
-2. In Render, "New Web Service" → connect the repo → set root directory to `backend`.
-3. Build command: `npm install` · Start command: `npm start`.
-4. Add environment variables from the table above.
-5. After the first deploy, run the ingestion script once (Render Shell or a one-off job): `npm run ingest:chroma`.
+The live demo runs the **FAISS** retrieval path only: it embeds locally inside the backend, so no separate vector database server is needed. The OpenAI + Chroma path is available when running locally with a Chroma server.
 
-*(A ready-made `render.yaml` is included at the repo root for Render's Blueprint deploys.)*
+Both deploy configs live at the **repository root**: `render.yaml` and `netlify.toml`.
+
+### Backend → Render
+1. In Render, **New → Blueprint** → connect this GitHub repo. Render reads `render.yaml`.
+2. When prompted, set `OPENAI_API_KEY`. Leave `CLIENT_ORIGIN` empty for now.
+3. Deploy. The build runs `npm install && npm run ingest:faiss`, so the FAISS index is built automatically.
+4. Check `https://<your-service>.onrender.com/api/health` returns `{"status":"ok"}`.
 
 ### Frontend → Netlify
-1. In Netlify, "Add new site" → import from GitHub.
-2. Base directory: `frontend` · Build command: `npm run build` · Publish directory: `dist`.
-3. Set `VITE_API_BASE_URL` to your deployed Render backend URL.
+1. In Netlify, **Add new site → Import an existing project** → pick this repo. Netlify reads `netlify.toml`.
+2. Under **Site configuration → Environment variables**, add `VITE_API_BASE_URL` = `https://<your-service>.onrender.com/api`, then redeploy.
+3. Back in Render, set `CLIENT_ORIGIN` to your Netlify URL (for example `https://your-site.netlify.app`) so only your site can call the API.
 
-*(A ready-made `netlify.toml` is included in `frontend/`.)*
+> The free Render plan sleeps after 15 minutes idle, and the first request then takes up to a minute while it wakes. The site shows a "waking up the server" message during that time.
 
 ---
 

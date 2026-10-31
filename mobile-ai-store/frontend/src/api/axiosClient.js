@@ -4,7 +4,8 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000
 
 const axiosClient = axios.create({
   baseURL: API_BASE_URL,
-  timeout: 20000,
+  // The free Render backend sleeps when idle and takes up to ~60s to wake.
+  timeout: 75000,
   headers: { 'Content-Type': 'application/json' }
 });
 

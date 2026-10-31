@@ -1,0 +1,26 @@
+# Render Blueprint for the backend API. Render reads this file from the repo root.
+# The live demo uses the FAISS retrieval path, which runs inside this service
+# (local embeddings, no separate vector database server). The FAISS index is
+# built during the build step, so no manual ingestion is needed.
+services:
+  - type: web
+    name: mobile-ai-store-backend
+    runtime: node
+    plan: free
+    rootDir: mobile-ai-store/backend
+    buildCommand: npm install && npm run ingest:faiss
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: "20"
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_CHAT_MODEL
+        value: gpt-4o-mini
+      - key: RETRIEVAL_BACKENDS
+        value: faiss
+      - key: CLIENT_ORIGIN
+        sync: false
+      - key: TOP_K
+        value: "10"

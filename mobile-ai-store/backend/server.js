@@ -14,6 +14,10 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Render (and most hosts) sit behind a proxy. Without this, every visitor
+// shares the proxy's IP and the chat rate limit applies to all of them at once.
+app.set('trust proxy', 1);
+
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json({ limit: '1mb' }));

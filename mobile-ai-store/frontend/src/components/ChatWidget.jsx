@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 import { MessageCircle, X, Send, Loader2, RotateCcw, Cpu } from 'lucide-react';
 import { sendChatMessage, resetChatSession } from '../api/chat';
 
+// Retrieval backends offered in the UI; the live site sets this to "faiss"
+// because it has no Chroma server. The switch is hidden when only one is left.
+const ENABLED_BACKENDS = (import.meta.env.VITE_RETRIEVAL_BACKENDS || 'chroma,faiss')
+  .split(',')
+  .map((b) => b.trim())
+  .filter((b) => b === 'chroma' || b === 'faiss');
+
 const TOKEN_PATTERN = /(\[[^\]]+\]\(\/product\/[^)\s]+\)|\*\*[^*]+\*\*)/g;
 const LINK_PATTERN = /^\[([^\]]+)\]\((\/product\/[^)\s]+)\)$/;
 const BOLD_PATTERN = /^\*\*([^*]+)\*\*$/;
@@ -61,7 +68,7 @@ export default function ChatWidget({ open, onClose }) {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const [backend, setBackend] = useState('chroma'); // 'chroma' (OpenAI) | 'faiss' (HF local)
+  const [backend, setBackend] = useState(ENABLED_BACKENDS[0] || 'faiss'); // 'chroma' (OpenAI) | 'faiss' (HF local)
   const bottomRef = useRef(null);
   const sessionId = useRef(getSessionId());
   // A ref updates immediately, unlike `loading`, so pressing Enter twice
@@ -146,26 +153,28 @@ export default function ChatWidget({ open, onClose }) {
         </div>
 
         {/* Retrieval backend switch */}
-        <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-2 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
-          <Cpu size={13} />
-          Retrieval:
-          <button
-            onClick={() => setBackend('chroma')}
-            className={`rounded-full px-2.5 py-1 font-medium ${
-              backend === 'chroma' ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-800'
-            }`}
-          >
-            OpenAI + Chroma
-          </button>
-          <button
-            onClick={() => setBackend('faiss')}
-            className={`rounded-full px-2.5 py-1 font-medium ${
-              backend === 'faiss' ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-800'
-            }`}
-          >
-            HF Instructor + FAISS
-          </button>
-        </div>
+        {ENABLED_BACKENDS.length > 1 && (
+          <div className="flex items-center gap-2 border-b border-slate-100 px-5 py-2 text-xs text-slate-500 dark:border-slate-800 dark:text-slate-400">
+            <Cpu size={13} />
+            Retrieval:
+            <button
+              onClick={() => setBackend('chroma')}
+              className={`rounded-full px-2.5 py-1 font-medium ${
+                backend === 'chroma' ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-800'
+              }`}
+            >
+              OpenAI + Chroma
+            </button>
+            <button
+              onClick={() => setBackend('faiss')}
+              className={`rounded-full px-2.5 py-1 font-medium ${
+                backend === 'faiss' ? 'bg-brand-500 text-white' : 'bg-slate-100 dark:bg-slate-800'
+              }`}
+            >
+              HF Instructor + FAISS
+            </button>
+          </div>
+        )}
 
         {/* Messages */}
         <div className="scrollbar-thin flex-1 space-y-4 overflow-y-auto px-5 py-4">
