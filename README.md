@@ -1,6 +1,6 @@
 # SmartPhone AI Advisor
 
-**🔗 Live demo: [ramya-phone-ai-advisor.netlify.app](https://ramya-phone-ai-advisor.netlify.app)**
+** Live demo: [ramya-phone-ai-advisor.netlify.app](https://ramya-phone-ai-advisor.netlify.app)**
 
 SmartPhone AI Advisor is an AI-powered smartphone e-commerce platform featuring a Retrieval-Augmented Generation (RAG) chatbot built with React, Node.js, OpenAI GPT, LangChain, ChromaDB, FAISS, and Hugging Face embeddings. The application provides semantic search, intelligent product recommendations, and context-aware conversational shopping assistance.
 
