@@ -14,6 +14,7 @@ build/
 # Vector store data (regenerate via ingestion scripts)
 embeddings/chroma/*
 embeddings/faiss/*
+backend/embeddings/
 !embeddings/chroma/.gitkeep
 !embeddings/faiss/.gitkeep
 

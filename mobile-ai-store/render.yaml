@@ -18,4 +18,4 @@ services:
       - key: CLIENT_ORIGIN
         sync: false
       - key: TOP_K
-        value: "4"
+        value: "10"

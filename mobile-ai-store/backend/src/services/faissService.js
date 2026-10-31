@@ -21,15 +21,20 @@ const META_FILE = path.join(FAISS_DIR, "meta.json");
 const MODEL_NAME = "Xenova/all-MiniLM-L6-v2";
 const EMBEDDING_DIM = 384;
 
-let extractor;
+let extractorPromise;
 let index;
 let metadata = [];
 
-async function getExtractor() {
-  if (!extractor) {
-    extractor = await pipeline("feature-extraction", MODEL_NAME);
+// Cache the promise, not the result, so concurrent first requests share a
+// single model load instead of each loading the model.
+function getExtractor() {
+  if (!extractorPromise) {
+    extractorPromise = pipeline("feature-extraction", MODEL_NAME).catch((err) => {
+      extractorPromise = null;
+      throw err;
+    });
   }
-  return extractor;
+  return extractorPromise;
 }
 
 function normalize(vec) {

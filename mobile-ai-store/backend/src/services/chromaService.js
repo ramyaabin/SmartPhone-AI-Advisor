@@ -4,7 +4,11 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+  timeout: 10000,
+  maxRetries: 1
+});
 const EMBEDDING_MODEL = process.env.OPENAI_EMBEDDING_MODEL || 'text-embedding-3-small';
 const COLLECTION_NAME = process.env.CHROMA_COLLECTION || 'mobile_products';
 
