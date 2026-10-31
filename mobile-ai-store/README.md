@@ -1,5 +1,7 @@
 # 📱 Mobile AI Store
 
+**🔗 Live demo: [ramya-phone-ai-advisor.netlify.app](https://ramya-phone-ai-advisor.netlify.app)**
+
 A production-quality, AI-powered e-commerce website that sells smartphones — built with **React + Express**, and featuring a **Retrieval-Augmented Generation (RAG) shopping assistant** that answers questions using *only* real product data, with citations, and zero hallucination.
 
 > Portfolio project demonstrating full-stack engineering + applied AI (RAG, embeddings, vector search, LLM orchestration).
