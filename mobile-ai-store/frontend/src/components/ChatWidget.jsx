@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { MessageCircle, X, Send, Loader2, RotateCcw, Cpu } from 'lucide-react';
+import { MessageCircle, X, Send, Loader2, RotateCcw, Cpu, Info } from 'lucide-react';
 import { sendChatMessage, resetChatSession } from '../api/chat';
 
 // Retrieval backends offered in the UI; the live site sets this to "faiss"
@@ -173,6 +173,16 @@ export default function ChatWidget({ open, onClose }) {
             >
               HF Instructor + FAISS
             </button>
+          </div>
+        )}
+        {ENABLED_BACKENDS.length === 1 && ENABLED_BACKENDS[0] === 'faiss' && (
+          <div className="flex items-start gap-2 border-b border-slate-100 bg-slate-50 px-5 py-2 text-xs leading-relaxed text-slate-500 dark:border-slate-800 dark:bg-slate-800/40 dark:text-slate-400">
+            <Info size={13} className="mt-0.5 shrink-0" />
+            <span>
+              <span className="font-medium text-slate-600 dark:text-slate-300">Retrieval: HF Instructor + FAISS.</span>{' '}
+              The OpenAI + ChromaDB mode is turned off on this demo because it needs a paid,
+              always-on database server. It works when you run the project locally.
+            </span>
           </div>
         )}
 

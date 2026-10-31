@@ -16,6 +16,8 @@ A production-quality, AI-powered e-commerce website that sells smartphones — b
 - 🤖 **AI Chat Assistant** — RAG-grounded, cites its sources, remembers conversation history
 - 🔁 **Swappable retrieval backends** — OpenAI Embeddings + ChromaDB *or* HuggingFace Instructor Embeddings + FAISS (fully local, no API cost)
 
+> **Note about the live demo:** To keep hosting free, the live site uses only the **HuggingFace + FAISS** retrieval mode, which runs inside the backend server. The **OpenAI + ChromaDB** mode needs its own always-on database server, which costs money to host, so it is turned off on the live site and the chat shows a note instead of the switch. Both modes work when running locally (see below). In both modes, the final answers are written by OpenAI GPT (`gpt-4o-mini`).
+
 ---
 
 ## 🧠 How the AI Assistant Works (RAG Pipeline)
